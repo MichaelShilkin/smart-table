@@ -22,9 +22,8 @@ export function initTable(settings, onAction) {
   });
 
   // @todo: #1.3 —  обработать события и вызвать onAction()
-  root.container.addEventListener("change", () => {
-    onAction();
-  });
+  root.container.addEventListener("change", onAction); // change → сразу вызываем onAction
+
   root.container.addEventListener("reset", () => {
     setTimeout(onAction);
   });
@@ -37,9 +36,14 @@ export function initTable(settings, onAction) {
     // @todo: #1.1 — преобразовать данные в массив строк на основе шаблона rowTemplate
     const nextRows = data.map((item) => {
       const row = cloneTemplate(rowTemplate);
-      Object.keys(item).forEach((key) => {
-        if (key in row.elements) {
-          row.elements[key].textContent = item[key];
+      Object.keys(item).forEach((key) => {      // Перебираем все ключи объекта item (date, customer, seller, total и т.д.)
+        if (row.elements[key]) {
+          const element = row.elements[key];
+          if (element.tagName === "INPUT" || element.tagName === "SELECT") {
+            element.value = item[key];
+          } else {
+            element.textContent = item[key];
+          }
         }
       });
       return row.container;
