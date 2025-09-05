@@ -63,7 +63,7 @@ const sampleTable = initTable(
 // @todo: инициализация
 
 // Инициализация поиска
-const applySearching = initSearching('searchField');
+ const applySearching = initSearching('search');
 
 // Инициализация пагинации
 const { applyPagination, updatePagination } = initPagination();
